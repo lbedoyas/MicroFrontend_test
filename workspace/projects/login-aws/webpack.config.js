@@ -10,7 +10,7 @@ sharedMappings.register(
 
 module.exports = {
   output: {
-    uniqueName: "host",
+    uniqueName: "loginAWS",
     publicPath: "auto"
   },
   optimization: {
@@ -27,10 +27,13 @@ module.exports = {
   plugins: [
     new ModuleFederationPlugin({
         library: { type: "module" },
-        remotes: {
-            mf: "http://localhost:4201/remoteEntry.js",
-            loginAWS: "http://localhost:4202/remoteEntry_login.js",
+
+        name: "loginAWS",
+        filename: "remoteEntry_login.js",
+        exposes: {
+            './LoginModule': './projects/login-aws/src/app/login/login.module.ts',
         },
+
 
         shared: share({
           "@angular/core": { singleton: true, strictVersion: true, requiredVersion: 'auto' },
